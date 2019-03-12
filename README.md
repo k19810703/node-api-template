@@ -63,11 +63,18 @@ Node.js v10.15.2+
 ### 最佳实践
 *   参考
 
-    [参考] (https://github.com/i0natan/nodebestpractices)
+    [参考] (https://github.com/i0natan/nodebestpractices)
 *   跨域配置
+*   标准输入验证
+
+    [输入验证] (https://github.com/hapijs/joi)
 *   session外挂设置
 *   标准异常处理
 *   请求的uuid的配置
 *   NODE_ENV的配置
+*   限流
 
+    [输入验证] (https://github.com/nfriedly/express-rate-limit)
 ### 工具
+*   模型代码生成工具
+*   路由代码生成工具
