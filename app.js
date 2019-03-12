@@ -11,6 +11,7 @@ const business = require('./biz/bizRoute');
 const constdata = require('./util/constdata.js');
 const { NotFoundError } = require('./UserDefineError/notFoundError');
 
+// 配置跨域请求
 app.use(cors());
 // ADD USE START
 app.use(bodyParser.json());
@@ -21,7 +22,7 @@ app.use(cookieParser());
 const swaggerDocument = require('./swagger.json');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-// 请求预处理，在响应头上加上Request-Id字段，方便排查
+// 请求预处理，在响应头上加上RequestId字段，方便排查
 app.use((req, res, next) => {
   const uuid = uuidv1();
   log.info(`${uuid} ${req.method} ${req.originalUrl}`, req.body);

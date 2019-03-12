@@ -1,1 +1,1 @@
-module.exports.uuidfieldname = 'Request-ID';
+module.exports.uuidfieldname = 'RequestID';
