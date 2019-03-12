@@ -62,7 +62,8 @@ Node.js v10.15.2+
 *   pm2部署
 ### 最佳实践
 *   参考
-[参考](https://github.com/i0natan/nodebestpractices)
+
+    [参考] (https://github.com/i0natan/nodebestpractices)
 *   跨域配置
 *   session外挂设置
 *   标准异常处理
