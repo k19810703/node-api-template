@@ -21,11 +21,8 @@
       "**/*.{js,jsx}",
       "!**/node_modules/**",
       "!**/coverage/**",
-      "!**/public/**",
       "!**/util/db2class.js",
-      "!**/daemonProcess/**",
-      "!**/testutil/**",
-      "!*.js"
+      "!**/testutil/**"
     ]
   },
   "nodemonConfig": {
@@ -34,8 +31,6 @@
     }
   },
   "dependencies": {
-    "angular": "^1.5.9",
-    "angular-sanitize": "^1.7.6",
     "body-parser": "^1.17.x",
     "camelcase": "^5.2.0",
     "cfenv": "1.1.x",
@@ -45,7 +40,6 @@
     "cross-env": "^5.2.0",
     "debug": "^4.1.0",
     "dotenv": "^4.0.0",
-    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "~1.15.6",
     "express-status-monitor": "^1.2.3",
@@ -53,12 +47,12 @@
     "joi": "^14.3.1",
     "lodash": "^4.17.11",
     "log": "^1.4.0",
-    "log4js": "^4.0.2",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "multer": "1.4.1",
     "swagger-ui-express": "^4.0.2",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1"
   },
   "repository": {},
   "engines": {
