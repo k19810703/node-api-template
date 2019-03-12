@@ -5,6 +5,7 @@ Node.js v10.15.2+
 
 ##  模板内容
 ### 目录结构
+```
 |-- Workspace
     |-- .eslintignore
     |-- .eslintrc.js
@@ -36,7 +37,7 @@ Node.js v10.15.2+
         |-- commonUtil.js
         |-- constdata.js
         |-- database.js
-
+```
 ### 开发
 ### 测试
 ### 部署
