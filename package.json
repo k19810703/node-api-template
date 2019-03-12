@@ -1,0 +1,81 @@
+{
+  "name": "node-api-template",
+  "main": "server.js",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest --coverage --env=node",
+    "check": "eslint --ignore-path .eslintignore --quiet \"./**/*.js\""
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/public/**",
+      "!**/util/db2class.js",
+      "!**/daemonProcess/**",
+      "!**/testutil/**",
+      "!*.js"
+    ]
+  },
+  "nodemonConfig": {
+    "env": {
+      "NODE_HEAPDUMP_OPTIONS": "nosignal"
+    }
+  },
+  "dependencies": {
+    "angular": "^1.5.9",
+    "angular-sanitize": "^1.7.6",
+    "body-parser": "^1.17.x",
+    "camelcase": "^5.2.0",
+    "cfenv": "1.1.x",
+    "connect-db2": "^0.6.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "2.8.4",
+    "cross-env": "^5.2.0",
+    "debug": "^4.1.0",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "~1.15.6",
+    "express-status-monitor": "^1.2.3",
+    "ibm_db": "^2.5.0",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.11",
+    "log": "^1.4.0",
+    "log4js": "^4.0.2",
+    "moment": "^2.22.2",
+    "morgan": "^1.9.1",
+    "multer": "1.4.1",
+    "swagger-ui-express": "^4.0.2",
+    "uuid": "^3.3.2"
+  },
+  "repository": {},
+  "engines": {
+    "node": "^8.11.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-angular": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.1.0",
+    "superagent": "^4.0.0",
+    "supertest": "^3.3.0"
+  }
+}

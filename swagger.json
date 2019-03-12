@@ -1,0 +1,299 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "AMLBatch データベース更新API",
+    "version": "1.0.0",
+    "title": "AMLBatch API",
+    "contact": {
+      "email": "wuhd@cn.ibm.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "healthcheck",
+      "description": "ヘルスチェック"
+    },
+    {
+      "name": "order",
+      "description": "受付番号管理テーブル"
+    },
+    {
+      "name": "process",
+      "description": "バッチ処理API"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/healthcheck": {
+      "get": {
+        "tags": [
+          "healthcheck"
+        ],
+        "summary": "ヘルスチェック",
+        "description": "ヘルスチェックAPI",
+        "operationId": "healthcheck",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/business/syuuxinn": {
+      "post": {
+        "tags": [
+          "process"
+        ],
+        "summary": "受付番号採番API",
+        "description": "HULFT集信トリガーJOBからHTTPリクエストを受けてから以下の処理を行い\n①受付番号管理テーブルに新しいレコードをインサートする②テーブルから採番した受付番号(受付日付 + 受付順序)を元にユニックファイル名（集信ファイル名_受付番号）を設定する\n③ユニックファイル名をテキストで返信します。",
+        "operationId": "syuuxinn",
+        "produces": [
+          "text/plain",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "HULFT集信ファイル名：ファイル名_銀行番号\nファイル名:任意\n銀行番号:4桁",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SyuuxinnProcessIF"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "受付番号管理テーブルで裁判処理が正常終了しました。",
+            "schema": {
+              "type": "string",
+              "example": "fileidxxx_0123_20190203123"
+            }
+          },
+          "401": {
+            "description": "権限ありません",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "データベースエラー",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/business/filesplit": {
+      "post": {
+        "tags": [
+          "process"
+        ],
+        "summary": "SASJOB登録API",
+        "description": "ファイル分割とSASJOB登録JOBからHTTPリクエストを受けてから以下の処理を行い\n①受付番号管理テーブルのステータスを２に更新する\n②FILE_NAMEにあるファイル名毎にファイル状況管理テーブルにインサートする\n③FILE_NAMEにあるファイル名毎にスタックエントリー管理テーブルにインサートする",
+        "operationId": "filesplit",
+        "produces": [
+          "text/plain",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "HULFT集信ファイル名：ファイル名_銀行番号\nファイル名:任意\n銀行番号:4桁",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SASJOBApplyIF"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SASJOB登録A正常終了しました。",
+            "schema": {
+              "type": "string",
+              "example": ""
+            }
+          },
+          "401": {
+            "description": "権限ありません",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "データベースエラー",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/business/sasjobtrigger": {
+      "post": {
+        "tags": [
+          "process"
+        ],
+        "summary": "SASJOB起動制御",
+        "description": "SASJOB起動制御説明" ,
+        "operationId": "sasjobtrigger",
+        "produces": [
+          "text/plain",
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "SASJOB登録A正常終了しました。",
+            "schema": {
+              "type": "string",
+              "example": ""
+            }
+          },
+          "401": {
+            "description": "権限ありません",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "データベースエラー",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SyuuxinnProcessIF": {
+      "type": "object",
+      "required":[
+        "FILE_NAME"
+      ],
+      "properties": {
+        "FILE_NAME": {
+          "type": "string",
+          "example": "fileidxxx_0123",
+          "description": "HULFT集信ファイル名",
+          "maximum": 200,
+          "minimum": 5
+        }
+      }
+    },
+    "SASJOBApplyIF": {
+      "type": "object",
+      "required":[
+        "FILE_NAME",
+        "LINESSTANDARD",
+        "LASTFILELINES",
+        "TYPE",
+        "SASCOMMAND"
+      ],
+      "properties": {
+        "FILE_NAME": {
+          "type": "array",
+          "items": {
+              "type": "string"
+          },
+          "example": ["fileidxxx_0123_YYYYMMDD000X001","fileidxxx_0123_YYYYMMDD000X002"],
+          "description": "分割対象したファイル一覧(フルパス)"
+        },
+        "LINESSTANDARD": {
+          "type": "string",
+          "example": "12345",
+          "description": "分割行数"
+        },
+        "LASTFILELINES": {
+          "type": "string",
+          "example": "123",
+          "description": "最終ファイル行数"
+        },
+        "TYPE": {
+          "type": "string",
+          "example": "0",
+          "description": "ファイルタイプ(0:分解 1:シングル )",
+          "enum": [
+            "0",
+            "1"
+          ]
+        },
+        "SASCOMMAND": {
+          "type": "string",
+          "example": "sasbatch.sh",
+          "description": "SASJOB起動コマンド"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "required":[
+        "SEQ_DATE",
+        "BONO",
+        "FILE_NAME",
+        "STATUS"
+      ],
+      "properties": {
+        "SEQ_DATE": {
+          "type": "string",
+          "description": "受付日付(受付番号の前半)"
+        },
+        "SEQ_NO": {
+          "type": "integer",
+          "format": "int64",
+          "description": "受付順序(受付番号の後半)"
+        },
+        "BONO": {
+          "type": "string",
+          "description": "銀行番号"
+        },
+        "FILE_NAME": {
+          "type": "string",
+          "description": "HULFT集信ファイル($FILENM)"
+        },
+        "STATUS": {
+          "type": "string",
+          "description": "0:未実施、1～8:JOBフローステータス、E:エラー、T:タイムアウト",
+          "enum": [
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "E", "T"
+          ]
+        },
+        "CHANGE_TS": {
+          "type": "string",
+          "description": "本レコードupdate時の時刻(Db2で設定)",
+          "format": "date-time"
+        }
+      },
+      "xml": {
+        "name": "Order"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
