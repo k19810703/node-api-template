@@ -11,7 +11,7 @@ const business = require('./biz/bizRoute');
 const constdata = require('./util/constdata.js');
 const { NotFoundError } = require('./UserDefineError/notFoundError');
 
-// 配置跨域请求
+// 配置跨域请ld求
 app.use(cors());
 // ADD USE START
 app.use(bodyParser.json());
