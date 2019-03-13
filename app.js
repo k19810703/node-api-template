@@ -40,7 +40,6 @@ app.use('/api/biz', business);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  // log.info('not found');
   next(new NotFoundError(req));
 });
 
