@@ -3,20 +3,22 @@ const swaggerUi = require('swagger-ui-express');
 const uuidv1 = require('uuid/v1');
 
 const app = express();
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const addRequestId = require('express-request-id')();
+
 const { log } = require('./util/log');
 const business = require('./biz/bizRoute');
 const constdata = require('./util/constdata.js');
 const { NotFoundError } = require('./UserDefineError/notFoundError');
 
+
+app.use(addRequestId);
 // 配置跨域请ld求
 app.use(cors());
 // ADD USE START
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 // 加载swagger
 const swaggerDocument = require('./swagger.json');
@@ -24,8 +26,7 @@ const swaggerDocument = require('./swagger.json');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // 请求预处理，在响应头上加上RequestId字段，方便排查
 app.use((req, res, next) => {
-  const uuid = uuidv1();
-  log.info(`${uuid} ${req.method} ${req.originalUrl}`, req.body);
+  log.info(`${req.id} ${req.method} ${req.originalUrl}`, req.body);
   res.append(constdata.uuidfieldname, uuid);
   next();
 });

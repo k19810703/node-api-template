@@ -71,6 +71,7 @@ Node.js v10.15.2+
 *   session外挂设置
 *   标准异常处理
 *   请求的uuid的配置
+    使用[express-request-id](https://github.com/floatdrop/express-request-id)
 *   NODE_ENV的配置
 *   限流
 
