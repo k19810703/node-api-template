@@ -8,8 +8,11 @@ function errorHandler(requestid, error) {
   if (!Boom.isBoom(error)) {
     if (error.isJoi) {
       localError = Boom.badRequest(error.details.map(detail => detail.message));
+    } else if (error.errors && error.name && error.name === 'ValidationError') {
+      localError = Boom.badData('invalid data', error.errors);
+      localError.output.payload.detail = error.errors;
     } else {
-      localError = Boom.boomify(error, { statusCode: 400 });
+      localError = Boom.boomify(error, { statusCode: 500 });
     }
   } else {
     localError = error;

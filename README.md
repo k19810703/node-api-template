@@ -4,6 +4,15 @@
 Node.js v10.15.2+
 
 ##  模板内容
+本例使用mongodb作为数据库，实现了Animal对象的查找和创建功能。
+
+## Sample的使用
+``` SHELL
+docker run --name mongodb -p 27017:27017 -d mongo
+npm install
+npm start
+```
+
 ### 目录结构
 ```
 |-- Workspace
@@ -17,23 +26,13 @@ Node.js v10.15.2+
     |-- package.json      依赖配置
     |-- server.js
     |-- swagger.json      API定义
-    |-- Test              测试目录
-    |   |-- UnitTest      UT目录
-    |       |-- Data      UT数据目录
-    |       |   |-- testprogram.data.js   testprogram的测试数据
-    |       |-- TestScript
-    |           |-- testprogram.test.js   testprogram的ut程序
-    |-- biz                 业务逻辑目录
-    |   |-- bizProcess.js   业务逻辑代码
-    |   |-- bizRoute        业务逻辑路由
     |-- model               业务模型
-    |   |-- sampleModel.js  业务模型(sample)的接口实现
-    |   |-- sampleRoute.js  业务模型(sample)的路由
+    |   |-- Model.js        业务模型
+    |   |-- animalProcess.js  业务模型(animal)的业务处理逻辑
+    |   |-- animalRoute.js    业务模型(animal)的路由
     |-- util
         |-- commonUtil.js   共通方法
-        |-- constdata.js    全局常量
-        |-- database.js     数据库接口的实现
-        |-- httprequest.js  后端HTTP请求实现
+        |-- db.js           数据库接口的实现
 
 ```
 ### 开发

@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^7.4.2",
+    "bluebird": "^3.5.5",
     "body-parser": "^1.19.0",
     "camelcase": "^5.3.1",
     "cors": "^2.8.5",
