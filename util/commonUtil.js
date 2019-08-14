@@ -12,6 +12,7 @@ function errorHandler(requestid, error) {
       localError = Boom.badData('invalid data', error.errors);
       localError.output.payload.detail = error.errors;
     } else {
+      // TODO:此处其他可识别的错误的处理
       localError = Boom.boomify(error, { statusCode: 500 });
     }
   } else {

@@ -2,6 +2,8 @@ const { Animal } = require('./Models');
 const { connectMongo } = require('../util/db');
 const { log } = require('../util/log');
 
+// TODO:其他业务模型的业务处理在此处添加
+
 async function getAll() {
   log.info('getAll');
   await connectMongo();

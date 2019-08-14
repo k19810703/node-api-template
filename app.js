@@ -10,6 +10,7 @@ const addRequestId = require('express-request-id')();
 
 const { log } = require('./util/log');
 const { errorHandler } = require('./util/commonUtil');
+// TODO:此处业务路由 
 const animailRoute = require('./model/animalRoute');
 
 app.use(addRequestId);
@@ -29,16 +30,10 @@ app.use((req, res, next) => {
   log.info(`${req.id} ${req.method} ${req.originalUrl}`);
   next();
 });
-// app.use('/', index);
+
+// TODO:此处添加业务路由 
 app.use('/api/animal', animailRoute);
-// app.use('/api/order', order);
-// app.use('/api/biz', business);
-// app.use('/api/pagedata', pagedata);
 
-// catch error
-
-
-// catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(Boom.notFound(`${req.originalUrl} not found`));
 });
