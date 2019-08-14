@@ -61,21 +61,11 @@ Node.js v10.15.2+
 *   Docker部署
 *   pm2部署
 ### 最佳实践
-*   参考
-
-    [参考] (https://github.com/i0natan/nodebestpractices)
-*   跨域配置
-*   标准输入验证
-
-    [输入验证] (https://github.com/hapijs/joi)
+*   [参考](https://github.com/i0natan/nodebestpractices)
+### 使用到的一些包
+*   [输入验证](https://github.com/hapijs/joi)
 *   session外挂设置
-*   标准异常处理
-*   请求的uuid的配置
-    使用[express-request-id](https://github.com/floatdrop/express-request-id)
+*   [HTTP异常](https://github.com/hapijs/boom)
+*   [RequestID](https://github.com/floatdrop/express-request-id)
 *   NODE_ENV的配置
-*   限流
-
-    [输入验证] (https://github.com/nfriedly/express-rate-limit)
-### 工具
-*   模型代码生成工具
-*   路由代码生成工具
+*   [限流](https://github.com/nfriedly/express-rate-limit)
