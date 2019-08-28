@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const swaggerUi = require('swagger-ui-express');
 const Boom = require('@hapi/boom');
 const morgan = require('morgan');
@@ -10,15 +11,17 @@ const addRequestId = require('express-request-id')();
 
 const { log } = require('./util/log');
 const { errorHandler } = require('./util/commonUtil');
-// TODO:此处业务路由 
+// TODO:此处业务路由
 const animailRoute = require('./model/animalRoute');
 
 app.use(addRequestId);
+// 添加security header
+app.use(helmet());
 app.use(morgan(':date[iso] info: :res[X-Request-Id] :method :url :status :res[content-length] - :response-time ms'));
 // 配置跨域请ld求
 app.use(cors());
 // ADD USE START
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '300kb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // 加载swagger
@@ -31,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// TODO:此处添加业务路由 
+// TODO:此处添加业务路由
 app.use('/api/animal', animailRoute);
 
 app.use((req, res, next) => {
